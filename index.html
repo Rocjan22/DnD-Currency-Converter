@@ -32,13 +32,14 @@
             button {
                 border-radius: 9px;
                 background-color: #999;
-                margin: 10px;
                 font-family: 'Oxygen', sans-serif;
                 border: none;
-                padding: 10px ;
+                padding: 10px;
                 color: #fff;
                 text-align: center;
                 width: 90px;
+                cursor: pointer;
+                transition: background 0.3s;
             }
 
             button:hover{
@@ -58,8 +59,10 @@
             .conversionButtons{
                 display: flex;
                 justify-content: center;
-                align-items:center;
-                align-content: center;
+                flex-wrap: wrap;
+                gap: 10px;
+                max-width: 320px;
+                margin: 5px auto;
             }
 
             #toPc, #toPp, #toPo, #toPe, #toPpt {
@@ -96,7 +99,7 @@
                 background-color: #c34a41;
                 color: #fff;
                 border: none;
-                margin: 15px auto;
+                margin: 20px auto;
                 width: 325px;
             }
 
@@ -112,7 +115,7 @@
         <div class="container">
             <div class="content">
                 <input type="number" style="display: none" placeholder="Ingresa la cantidad" >
-
+                <br>
                 <div class="conversionButtons">
                     <button id="toPc" style="display:none">PC</button>
                     <button id="toPp" style="display:none">PP</button>
