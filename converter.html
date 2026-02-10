@@ -1,0 +1,300 @@
+<!DOCTYPE HTML>
+<!-- original : https://codepen.io/jenjen9/pen/yLBNOKB -->
+<html>
+    <head>
+        <title>D&D Currency Converter</title>
+        <link href="https://fonts.googleapis.com/css?family=Oxygen&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <style>
+            body{
+                background-color:#3a3a3a;
+            }
+
+            .container{
+                margin: 0 25px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+            }
+
+            h1 {
+                font-family: 'Oxygen', sans-serif;
+                font-size: 40px;
+                text-align:center;
+                color: #fff;
+            }
+
+            button {
+                border-radius: 9px;
+                background-color: #999;
+                margin: 10px;
+                font-family: 'Oxygen', sans-serif;
+                border: none;
+                padding: 10px ;
+                color: #fff;
+                text-align: center;
+                width: 90px;
+            }
+
+            button:hover{
+                background-color: #b3b3b3;
+            }
+
+            .categoryButtons{
+                margin: auto;
+                width: fit-content;
+            }
+
+            .content{
+                width: 1000px;
+                margin: auto;
+            }
+
+            .conversionButtons{
+                display: flex;
+                justify-content: center;
+                align-items:center;
+                align-content: center;
+            }
+
+            #toPc, #toPp, #toPo, #toPe, #toPpt {
+                background-color:#009688;
+                font-size: 15px;
+            }
+
+            #toPc:hover, #toPp:hover, #toPo:hover, #toPe:hover, #toPpt:hover {
+                background-color: #ffad66;
+            }
+
+            input {
+                width: 300px;
+                padding: 10px;
+                border-radius: 9px;
+                text-align: center;
+                font-family: 'Oxygen', sans-serif;
+                margin: auto;
+                border: none;
+            }
+
+            #output {
+                font-family: monospace;
+                font-size: 15px;
+                text-align: left;
+                margin: auto;
+                padding: 10px;
+                width: 300px;
+                background-color: #fff;
+                border-radius: 9px;
+            }
+
+            #reset{
+                background-color: #c34a41;
+                color: #fff;
+                border: none;
+                margin: 15px auto;
+                width: 325px;
+            }
+
+            #reset:hover{
+                background-color: #b3b3b3;
+            }
+
+
+        </style>
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="content">
+                <input type="number" style="display: none" placeholder="Ingresa la cantidad" >
+
+                <div class="conversionButtons">
+                    <button id="toPc" style="display:none">PC</button>
+                    <button id="toPp" style="display:none">PP</button>
+                    <button id="toPe" style="display:none">PE</button>
+                    <button id="toPo" style="display:none">PO</button>
+                    <button id="toPpt" style="display:none">PPT</button>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div id="output" style="display:none"></div>
+            <div>
+                <input type="reset" id="reset" style="display:none">
+            </div>
+        </div>
+
+        <script>
+            let input = document.querySelector('input');
+            let output = document.getElementById('output');
+
+            const toPc = document.getElementById('toPc');
+            const toPp = document.getElementById('toPp');
+            const toPo = document.getElementById('toPo');
+            const toPe = document.getElementById('toPe');
+            const toPpt = document.getElementById('toPpt');
+
+            const resetButton = document.getElementById('reset');
+
+            input.style.display = 'block';
+            toPc.style.display = 'block';
+            toPp.style.display = 'block';
+            toPe.style.display = 'block';
+            toPo.style.display = 'block';
+            toPpt.style.display = 'block';
+            resetButton.style.display = 'block';
+
+            toPc.addEventListener('click', (e) =>{
+                output.innerHTML =`${input.value} PC &rarr; ${conversion.pc.pcToPp()} PP <br>
+                ${input.value} PC &rarr; ${conversion.pc.pcToPe()} PE <br>
+                ${input.value} PC &rarr; ${conversion.pc.pcToPo()} PO <br>
+                ${input.value} PC &rarr; ${conversion.pc.pcToPpt()} PPT <br>
+                `;
+                });
+
+            toPp.addEventListener('click', (e) =>{
+                output.innerHTML = `${input.value} PP &rarr; ${conversion.pp.ppToPc()} PC <br>
+                ${input.value} PP &rarr; ${conversion.pp.ppToPe()} PE <br>
+                ${input.value} PP &rarr; ${conversion.pp.ppToPo()} PO <br>
+                ${input.value} PP &rarr; ${conversion.pp.ppToPpt()} PPT <br>
+                `;
+            });
+
+            toPe.addEventListener('click', (e) =>{
+                output.innerHTML = `${input.value} PE &rarr; ${conversion.pe.peToPc()} PC <br>
+                ${input.value} PE &rarr; ${conversion.pe.peToPp()} PP <br>
+                ${input.value} PE &rarr; ${conversion.pe.peToPo()} PO <br>
+                ${input.value} PE &rarr; ${conversion.pe.peToPpt()} PPT <br>
+                `;
+            });
+
+            toPo.addEventListener('click', (e) =>{
+                output.innerHTML = `${input.value} PO &rarr; ${conversion.po.poToPc()} PC <br>
+                ${input.value} PO &rarr; ${conversion.po.poToPp()} PP <br>
+                ${input.value} PO &rarr; ${conversion.po.poToPe()} PE <br>
+                ${input.value} PO &rarr; ${conversion.po.poToPpt()} PPT <br>
+                `;
+            });
+
+            toPpt.addEventListener('click', (e) =>{
+                output.innerHTML = `${input.value} PPT &rarr; ${conversion.ppt.pptToPc()} PC <br>
+                ${input.value} PPT &rarr; ${conversion.ppt.pptToPp()} PP <br>
+                ${input.value} PPT &rarr; ${conversion.ppt.pptToPe()} PE <br>
+                ${input.value} PPT &rarr; ${conversion.ppt.pptToPo()} PO <br>
+                `;
+            });
+
+            output.style.display = 'block';
+            output.innerHTML = "";
+            input.value = null;
+
+            resetButton.addEventListener('click', (e) =>{
+                location.reload();
+            });
+
+            const conversion = {
+                pc: {
+                    pcToPp(){
+                        let pcPp = (input.value * (1/10)).toFixed(1);
+                        return pcPp;
+                    },
+                    pcToPe(){
+                        let pcPe = (input.value * (1/50)).toFixed(2);
+                        return pcPe;
+                    },
+                    pcToPo(){
+                        let pcPo = (input.value * (1/100)).toFixed(2);
+                        return pcPo;
+                    },
+                    pcToPpt(){
+                        let pcPpt = (input.value * (1/1000)).toFixed(3);
+                        return pcPpt;
+                    }
+                },
+                
+                pp: {
+                    ppToPc(){
+                        let ppPc = (input.value * (10)).toFixed(0);
+                        return ppPc;
+                    },
+                    ppToPe(){
+                        let ppPe = (input.value * (1/5)).toFixed(1);
+                        return ppPe;
+                    },
+                    ppToPo(){
+                        let ppPo = (input.value * (1/10)).toFixed(1);
+                        return ppPo;
+                    },
+                    ppToPpt(){
+                        let ppPpt = (input.value * (1/100)).toFixed(2);
+                        return ppPpt;
+                    }
+                },
+
+                pe: {
+                    peToPc(){
+                        let pePc = (input.value * (50)).toFixed(0);
+                        return pePc;
+                    },
+                    peToPp(){
+                        let pePp = (input.value * (5)).toFixed(0);
+                        return pePp;
+                    },
+                    peToPo(){
+                        let pePo = (input.value * (1/2)).toFixed(1);
+                        return pePo;
+                    },
+                    peToPpt(){
+                        let pePpt = (input.value * (1/20)).toFixed(2);
+                        return pePpt;
+                    }
+                },
+
+                po: {
+                    poToPc(){
+                        let poPc = (input.value * (100)).toFixed(0);
+                        return poPc;
+                    },
+                    poToPp(){
+                        let poPp = (input.value * (10)).toFixed(0);
+                        return poPp;
+                    },
+                    poToPe(){
+                        let poPe = (input.value * (2)).toFixed(0);
+                        return poPe;
+                    },
+                    poToPpt(){
+                        let poPpt = (input.value * (1/10)).toFixed(1);
+                        return poPpt;
+                    }
+                },
+
+                ppt: {
+                    pptToPc(){
+                        let pptPc = (input.value * (1000)).toFixed(0);
+                        return pptPc;
+                    },
+                    pptToPp(){
+                        let pptPp = (input.value * (100)).toFixed(0);
+                        return pptPp;
+                    },
+                    pptToPe(){
+                        let pptPe = (input.value * (20)).toFixed(0);
+                        return pptPe;
+                    },
+                    pptToPo(){
+                        let pptPo = (input.value * (10)).toFixed(0);
+                        return pptPo;
+                    }
+                }
+            };
+        </script>
+    </body>
+</html>
